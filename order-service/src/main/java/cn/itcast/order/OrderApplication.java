@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @MapperScan("cn.itcast.order.mapper")
+//这里的clients是一个数组，这样可以选择注入的client是哪个，不用全部注入
 @EnableFeignClients(defaultConfiguration = DefaultFeignConfiguration.class
                     , clients = {UserClient.class})
 @SpringBootApplication
