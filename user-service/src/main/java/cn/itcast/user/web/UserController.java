@@ -3,6 +3,7 @@ package cn.itcast.user.web;
 import cn.itcast.user.config.PatternProperties;
 import cn.itcast.user.pojo.User;
 import cn.itcast.user.service.UserService;
+import com.netflix.ribbon.proxy.annotation.Http;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,12 @@ public class UserController {
         return properties;
     }
 
+    @GetMapping("test")//测试filter网关加请求头
+    public String test(@RequestHeader(value = "Truth", required = false) String truth)
+    {
+        System.out.println(truth);
+        return " ";
+    }
 
     @GetMapping("now")
     public String now()

@@ -1,0 +1,20 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: localhost:81
+    gateway:
+      routes:
+        - id: user-service #每个唯一的路由id
+          uri: lb://userservice #路由的转发路径 lb进行负载均衡
+          predicates: #这个可以匹配哪些请求路径进行转发
+            - Path=/user/**
+          filters:
+            - AddRequestHeader=Truth, Itcast is freaking awesome! # 添加请求头
+        - id: order-service
+          uri: lb://orderservice
+          predicates:
+            - Path=/order/**
