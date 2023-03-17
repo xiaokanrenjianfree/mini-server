@@ -5,7 +5,7 @@ spring:
     name: gateway
   cloud:
     nacos:
-      server-addr: localhost:81
+      server-addr: nacos:81
     gateway:
       routes:
         - id: user-service #每个唯一的路由id
@@ -18,3 +18,22 @@ spring:
           uri: lb://orderservice
           predicates:
             - Path=/order/**
+      default-filters: #这里是对所有的服务请求都生效
+        - AddRequestHeader=Truth2, Itcast is freaking awesome! # 添加请求头
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: # 允许哪些网站的跨域请求
+              - "http://localhost:8090"
+              - "http://www.leyou.com"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            allowCredentials: true # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+
